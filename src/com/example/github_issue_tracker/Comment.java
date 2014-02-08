@@ -3,22 +3,19 @@ package com.example.github_issue_tracker;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Issue extends InfoItem {
-	 private String title, body, comments_url;
-	 private long updateTime;
+public class Comment extends InfoItem {
+	private String author, body;
 	 public void init(JSONObject jIssue) {
 		try {
-			title = jIssue.getString("title");
+			author = ((JSONObject)jIssue.get("user")).getString("login");
 			body = jIssue.getString("body");
-			comments_url = jIssue.getString("comments_url");
-			updateTime = Long.parseLong(jIssue.getString("updated_at").replaceAll("[^0-9]", ""));
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public String getTitle() {
-		return title;
+	public String getAuthor() {
+		return author;
 	}
 	
 	public String getBody() {
@@ -30,23 +27,19 @@ public class Issue extends InfoItem {
 		if(abs.length() == 140) abs += "...";
 		return abs;
 	}
-		
-	public String getCommentUrl() {
-		return comments_url;
-	}
 
 	@Override
 	public String getMetaInfo() {
-		return title;
+		return author;
 	}
 
 	@Override
 	public String getBodyInfo() {
-		return getAbstract();
+		return body;
 	}
 
 	@Override
 	public long getPriority() {
-		return updateTime;
+		return 0;
 	}
 }

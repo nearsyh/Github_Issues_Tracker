@@ -7,8 +7,8 @@
     <string name="c_repo_name">Reponame</string>
     <string name="c_search">Search</string>
     <string name="c_issues_list">Issues List</string>
-    <string name="user_name">Rails</string>
-    <string name="repo_name">Rails</string>
+    <string name="user_name">crashlytics</string>
+    <string name="repo_name">secureudid</string>
     <string name="title_activity_main_view">MainView</string>
     <string name="hello_world">Hello world!</string>
 
