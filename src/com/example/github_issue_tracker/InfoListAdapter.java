@@ -8,24 +8,33 @@ import android.widget.TextView;
 
 public class InfoListAdapter extends BaseAdapter {
 	private Activity parent;
-	private InfoItemList issueData;
-	public InfoListAdapter(Activity p, InfoItemList data) {
+	private InfoItemList data, tempData;
+	public InfoListAdapter(Activity p, InfoItemList d) {
 		parent = p;
-		issueData = data;
+		data = d;
+		tempData = new InfoItemList(data, 5);
 	}
 	@Override
 	public int getCount() {
-		return issueData.getIssuesList().size();
+		return tempData.getIssuesList().size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		return issueData.getIssuesList().get(position);
+		return tempData.getIssuesList().get(position);
 	}
 
 	@Override
 	public long getItemId(int position) {
 		return position;
+	}
+	
+	public void load(int p, int size) {
+		tempData.add(data, p, size);
+	}
+	
+	public boolean isFinished() {
+		return tempData.getIssuesList().size() == data.getIssuesList().size();
 	}
 
 	@Override

@@ -30,6 +30,20 @@ public class InfoItemList implements OnTaskCompleted{
 		new ApiCall(this, false).execute(url);
 	}
 	
+	public InfoItemList(InfoItemList src, int size) {
+		info_item_list = new ArrayList<InfoItem>();
+		for(int i = 0; i < Math.min(src.info_item_list.size(), size); i ++) {
+			info_item_list.add(src.info_item_list.get(i));
+		}
+	}
+	
+	public void add(InfoItemList src, int p, int s) {
+		p = Math.min(src.info_item_list.size(), p);
+		s = Math.min(src.info_item_list.size(), p + s);
+		for(int i = p; i < s; i ++)
+			info_item_list.add(src.info_item_list.get(i));
+	}
+	
 	public void sort() {
 		Collections.sort(info_item_list);
 	}
