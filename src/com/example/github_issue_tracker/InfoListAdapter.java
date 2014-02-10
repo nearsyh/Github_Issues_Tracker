@@ -16,7 +16,7 @@ public class InfoListAdapter extends BaseAdapter {
 	}
 	@Override
 	public int getCount() {
-		return tempData.getIssuesList().size();
+		return tempData.getSize();
 	}
 
 	@Override
@@ -34,7 +34,7 @@ public class InfoListAdapter extends BaseAdapter {
 	}
 	
 	public boolean isFinished() {
-		return tempData.getIssuesList().size() == data.getIssuesList().size();
+		return tempData.getSize() == data.getSize();
 	}
 
 	@Override

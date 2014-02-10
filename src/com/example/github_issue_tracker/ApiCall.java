@@ -30,7 +30,7 @@ public class ApiCall extends AsyncTask<URL, Integer, String> {
 		if(onlyCheck) return CONNECTION_SUCCEED;
 		BufferedReader reader = null;
 		try {
-			reader = new BufferedReader(new InputStreamReader(url[0].openStream(), "UTF-8"), 8);
+			reader = new BufferedReader(new InputStreamReader(url[0].openStream(), "UTF-8"));
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

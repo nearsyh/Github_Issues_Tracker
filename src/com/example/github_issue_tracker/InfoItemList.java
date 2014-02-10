@@ -14,6 +14,7 @@ public class InfoItemList implements OnTaskCompleted{
 	protected OnTaskCompleted listener;
 	protected URL url = null;
 	private Class<?> c;
+	private boolean readingError = false;
 	public ArrayList<InfoItem> getIssuesList() {
 		return info_item_list;
 	}
@@ -44,12 +45,19 @@ public class InfoItemList implements OnTaskCompleted{
 			info_item_list.add(src.info_item_list.get(i));
 	}
 	
-	public void sort() {
+	public int getSize() {
+		return info_item_list.size();
+	}
+	
+	private void sort() {
 		if(info_item_list.size() > 1) Collections.sort(info_item_list);
 	}
 	
-	public void setUpContent(String result) {
-		if(result == ApiCall.CONNECTION_ERROR) return;
+	private void setUpContent(String result) {
+		if(result == ApiCall.CONNECTION_ERROR) {
+			readingError = true;
+			return;
+		}
 		JSONArray jArray = null;
 		try {
 			jArray = new JSONArray(result);
@@ -74,6 +82,10 @@ public class InfoItemList implements OnTaskCompleted{
 			}
 			if(temp != null) info_item_list.add(temp);
 		}
+	}
+	
+	public boolean isReadingError() {
+		return readingError;
 	}
 	
 	@Override
