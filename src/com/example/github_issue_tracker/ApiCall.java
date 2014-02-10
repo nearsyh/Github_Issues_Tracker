@@ -22,7 +22,7 @@ public class ApiCall extends AsyncTask<URL, Integer, String> {
 	@Override
 	protected String doInBackground(URL... url) {
 		try {
-			if(((HttpURLConnection)url[0].openConnection()).getResponseCode() != 200) return "Error";
+			if(((HttpURLConnection)url[0].openConnection()).getResponseCode() != 200) return CONNECTION_ERROR;
 		} catch (IOException e1) {
 			e1.printStackTrace();
 			return CONNECTION_ERROR;

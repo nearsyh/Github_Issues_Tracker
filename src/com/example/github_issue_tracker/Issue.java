@@ -4,7 +4,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Issue extends InfoItem {
-	 private String title, body, comments_url;
+	 private String title = "exception", body = "exception", comments_url = "exception";
 	 private long updateTime;
 	 public void init(JSONObject jIssue) {
 		try {

@@ -26,7 +26,6 @@ public class MainView extends ListActivity implements OnTaskCompleted, OnScrollL
 	private InfoItemList issueData, commentData;
 	private HashMap<String, InfoItemList> commentsCache;
 	private AlertDialog commentDialog, loadingDialog;
-	private boolean isLoading = false;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -88,7 +87,6 @@ public class MainView extends ListActivity implements OnTaskCompleted, OnScrollL
 		AlertDialog.Builder commentDialogBuilder = new AlertDialog.Builder(this);
 	    commentDialogBuilder.setTitle("Comments of " + ((Issue)issueData.getIssuesList().get(position)).getTitle());
 	    String lastCommentsURL = ((Issue)issueData.getIssuesList().get(position)).getCommentUrl();
-	    // TODO test
 	    if(commentsCache.containsKey(lastCommentsURL)) {
 	    	commentData = commentsCache.get(lastCommentsURL);
 	    	commentDialog = commentDialogBuilder.create();
@@ -112,7 +110,7 @@ public class MainView extends ListActivity implements OnTaskCompleted, OnScrollL
 	public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
 		int loadedItems = firstVisibleItem + visibleItemCount;
 		if(((InfoListAdapter)view.getAdapter()).isFinished()) return;
-		if(loadedItems == totalItemCount && isLoading == false){
+		if(loadedItems == totalItemCount){
 			new LoadList((InfoListAdapter)view.getAdapter()).execute(loadedItems);
 		}
 	}

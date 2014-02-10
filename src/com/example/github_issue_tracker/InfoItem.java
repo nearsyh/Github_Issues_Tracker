@@ -4,9 +4,9 @@ import org.json.JSONObject;
 
 public abstract class InfoItem implements Comparable<InfoItem> {
 	public abstract void init(JSONObject jIssue);
-	public abstract String getMetaInfo();
-	public abstract String getBodyInfo();
-	public abstract long getPriority();
+	public abstract String getMetaInfo(); // for the title
+	public abstract String getBodyInfo(); // for the body
+	public abstract long getPriority();   // for sort
 	@Override
 	public int compareTo(InfoItem another) {
 		if(getPriority() == another.getPriority()) return 0;

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.util.Log;
 //import android.text.Editable;
 //import android.text.TextWatcher;
 //import android.util.Log;
@@ -20,12 +21,13 @@ public class HomeScreen extends Activity implements OnTaskCompleted {
 	private EditText user_name, repo_name;
 	private boolean isValid = true;
 	//private boolean isChecked = false, pressed = false;
-	AlertDialog.Builder builder;
+	AlertDialog errorDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
-        builder = new AlertDialog.Builder(this);
+        errorDialog = new AlertDialog.Builder(this).create();
+		errorDialog.setMessage("Username or Reponame are not correct");
         user_name = ((EditText) findViewById(R.id.user_name));
     	repo_name = ((EditText) findViewById(R.id.repo_name));
     	/*
@@ -84,11 +86,11 @@ public class HomeScreen extends Activity implements OnTaskCompleted {
 	@Override
 	public void onTaskCompleted(String result) {
 		//isChecked = true;
-		isValid = (result != ApiCall.CONNECTION_ERROR);
+		isValid = !result.equals(ApiCall.CONNECTION_ERROR);
+		Log.v("homescreen", "" + isValid + " " + result + " " + ApiCall.CONNECTION_ERROR);
 		//if(!pressed) return;
 		if(!isValid) {
-			builder.setTitle("Error").setMessage("Username or Reponame are not correct");
-			builder.create().show();
+			errorDialog.show();
 		} else {
 			Intent intent = new Intent(this, MainView.class);
 		    intent.putExtra("user_name", username);

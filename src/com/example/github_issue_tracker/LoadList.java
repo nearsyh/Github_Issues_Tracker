@@ -9,7 +9,6 @@ public class LoadList extends AsyncTask<Integer, Void, Void> {
 	}
 	@Override
 	protected Void doInBackground(Integer... last) {
-		// TODO TEST
 		adapter.load(last[0].intValue(), 5);
 		return null;
 	}

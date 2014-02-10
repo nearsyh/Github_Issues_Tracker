@@ -4,8 +4,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Comment extends InfoItem {
-	private String author, body;
-	 public void init(JSONObject jIssue) {
+	private String author = "exception", body = "exception";
+	public void init(JSONObject jIssue) {
 		try {
 			author = ((JSONObject)jIssue.get("user")).getString("login");
 			body = jIssue.getString("body");
