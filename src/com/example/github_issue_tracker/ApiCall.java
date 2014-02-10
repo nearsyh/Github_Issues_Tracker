@@ -21,6 +21,7 @@ public class ApiCall extends AsyncTask<URL, Integer, String> {
 	
 	@Override
 	protected String doInBackground(URL... url) {
+		if(url == null || url[0] == null) return CONNECTION_ERROR;
 		try {
 			if(((HttpURLConnection)url[0].openConnection()).getResponseCode() != 200) return CONNECTION_ERROR;
 		} catch (IOException e1) {

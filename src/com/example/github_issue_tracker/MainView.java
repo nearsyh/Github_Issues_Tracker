@@ -6,10 +6,10 @@ import android.os.Bundle;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
 //import android.util.Log;
-//import android.util.Log;
-//import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AbsListView;
@@ -17,7 +17,6 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-//import android.widget.TextView;
 
 // Contain the view
 @SuppressLint("DefaultLocale")
@@ -26,7 +25,7 @@ public class MainView extends ListActivity implements OnTaskCompleted, OnScrollL
 	private ListView issues_list_view;
 	private InfoItemList data;
 	private HashMap<String, InfoItemList> commentsCache;
-	private AlertDialog commentDialog, loadingDialog;
+	private AlertDialog commentDialog, loadingDialog, errorDialog;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -39,6 +38,8 @@ public class MainView extends ListActivity implements OnTaskCompleted, OnScrollL
 	    loadingDialog = new AlertDialog.Builder(this).create();
 	    loadingDialog.setMessage("Loading");
 	    loadingDialog.show();
+	    errorDialog = new AlertDialog.Builder(this).create();
+	    errorDialog.setMessage("Error with connection or the url");
 	    commentsCache = new HashMap<String, InfoItemList>();
 	    issues_list_view.setOnItemClickListener(new OnItemClickListener() {
 			@Override
@@ -57,12 +58,18 @@ public class MainView extends ListActivity implements OnTaskCompleted, OnScrollL
 	}
 
 	@Override
-	public void onTaskCompleted(String result) {
+	public void onTaskCompleted(final String result) {
 		loadingDialog.dismiss();
 		if(data.isReadingError()) {
-			commentDialog = new AlertDialog.Builder(this).create();
-			commentDialog.setMessage("Error with connection or the url");
-			commentDialog.show();
+			if(result.equals(Issue.class.getSimpleName())) {
+				errorDialog.setOnDismissListener(new OnDismissListener() {
+					@Override
+					public void onDismiss(DialogInterface arg0) {
+						MainView.this.finish();
+					}
+				});
+			}
+			errorDialog.show();
 			return;
 		}
 		InfoListAdapter adapter = new InfoListAdapter(this, data);

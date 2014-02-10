@@ -14,6 +14,8 @@ public class HomeScreen extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
+        user_name = (EditText)findViewById(R.id.user_name);
+        repo_name = (EditText)findViewById(R.id.repo_name);
     }
 
 
