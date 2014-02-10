@@ -7,6 +7,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Intent;
+//import android.util.Log;
 //import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -15,12 +16,14 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.TextView;
 
 // Contain the view
 @SuppressLint("DefaultLocale")
 public class MainView extends ListActivity implements OnTaskCompleted, OnScrollListener {
 	private String user, repo;
 	private ListView issues_list_view;
+	private TextView errorInfo;
 	private InfoItemList issueData, commentData;
 	private HashMap<String, InfoItemList> commentsCache;
 	private AlertDialog.Builder commentDialogBuilder;
@@ -59,12 +62,19 @@ public class MainView extends ListActivity implements OnTaskCompleted, OnScrollL
 			issues_list_view.setAdapter(adapter);
 			issues_list_view.setOnScrollListener(this);
 		} else {
-			InfoListAdapter adapter = new InfoListAdapter(this, commentData);
-			ListView comments_list_view = new ListView(this);
-			comments_list_view.setAdapter(adapter);
-			comments_list_view.setOnScrollListener(this);
-		    commentDialogBuilder.setView(comments_list_view);
-			commentDialogBuilder.show();
+			//Log.v("mainview : commentData.size", "" + commentData.getIssuesList().size());
+			if(commentData.getIssuesList().size() == 0) {
+				errorInfo = new TextView(this);
+				errorInfo.setText("Error with Web connection or URL");
+				commentDialogBuilder.setView(errorInfo);
+			} else {
+				InfoListAdapter adapter = new InfoListAdapter(this, commentData);
+				ListView comments_list_view = new ListView(this);
+				comments_list_view.setAdapter(adapter);
+				comments_list_view.setOnScrollListener(this);
+				commentDialogBuilder.setView(comments_list_view);
+				commentDialogBuilder.show();
+			}
 			
 		}
 	}

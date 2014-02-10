@@ -84,7 +84,7 @@ public class HomeScreen extends Activity implements OnTaskCompleted {
 	@Override
 	public void onTaskCompleted(String result) {
 		//isChecked = true;
-		isValid = (result != "Error");
+		isValid = (result != ApiCall.CONNECTION_ERROR);
 		//if(!pressed) return;
 		if(!isValid) {
 			builder.setTitle("Error").setMessage("Username or Reponame are not correct");

@@ -45,10 +45,11 @@ public class InfoItemList implements OnTaskCompleted{
 	}
 	
 	public void sort() {
-		Collections.sort(info_item_list);
+		if(info_item_list.size() > 1) Collections.sort(info_item_list);
 	}
 	
 	public void setUpContent(String result) {
+		if(result == ApiCall.CONNECTION_ERROR) return;
 		JSONArray jArray = null;
 		try {
 			jArray = new JSONArray(result);

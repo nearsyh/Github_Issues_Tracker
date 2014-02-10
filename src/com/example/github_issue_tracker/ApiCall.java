@@ -13,6 +13,7 @@ import android.util.Log;
 public class ApiCall extends AsyncTask<URL, Integer, String> {
 	private OnTaskCompleted listener;
 	private boolean onlyCheck = false;
+	public static final String CONNECTION_ERROR = "ERROR", CONNECTION_SUCCEED = "SUCCEED";
 	public ApiCall(OnTaskCompleted l, boolean opt) {
 		listener = l;
 		onlyCheck = opt;
@@ -24,9 +25,9 @@ public class ApiCall extends AsyncTask<URL, Integer, String> {
 			if(((HttpURLConnection)url[0].openConnection()).getResponseCode() != 200) return "Error";
 		} catch (IOException e1) {
 			e1.printStackTrace();
-			return "Error";
+			return CONNECTION_ERROR;
 		}
-		if(onlyCheck) return "Yeah";
+		if(onlyCheck) return CONNECTION_SUCCEED;
 		BufferedReader reader = null;
 		try {
 			reader = new BufferedReader(new InputStreamReader(url[0].openStream(), "UTF-8"), 8);
